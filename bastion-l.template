@@ -1,0 +1,24 @@
+{
+        "AWSTemplateFormatVersion": "2010-09-09",
+"Resources": {
+        "BASTIONL":{
+                "Type": "AWS::EC2::Instance",
+                "Properties": {
+                        "InstanceType" : "t2.micro",
+                        "ImageId" : "ami-6871a115",
+                        "KeyName" : {
+                                "Ref" : "KeyName"
+                                }
+                                }
+                }
+        },
+
+"Parameters": {
+        "KeyName": {
+                "Description": "Key you will use to connect to instance",
+                "Type": "AWS::EC2::KeyPair::KeyName",
+                 "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+                }
+}
+}
+
