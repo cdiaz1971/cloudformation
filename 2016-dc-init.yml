@@ -15,7 +15,7 @@ Resources:
                        waitAfterCompletion: forever
                    2installreqs:
                      command: powershell.exe -Command Add-WindowsFeature AD-Domain-Services, RSAT-AD-AdminCenter,RSAT-ADDS-Tools -LogPath "C:\Logs.txt"
-                     waitAfterCompletion: "forever"
+                     waitAfterCompletion: 60
                    3dcpromo:
                      command: !Sub |
                        powershell.exe -Command Install-ADDSForest -DomainName ${DomainName} -DomainMode default -InstallDns -SafeModeAdministratorPassword (ConvertTo-SecureString ${AdminPwd} -AsPlainText -Force) -Confirm:$false -Force
