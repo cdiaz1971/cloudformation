@@ -18,11 +18,7 @@ Resources:
                      waitAfterCompletion: 60
                    3dcpromo:
                      command: !Sub |
-                       powershell.exe -Command Install-ADDSForest -DomainName ${DomainName} -DomainMode default -InstallDns -SafeModeAdministratorPassword (ConvertTo-SecureString ${SafeModePwd} -AsPlainText -Force) -Confirm:$false -Force
-                       waitAfterCompletion: forever
-                    4adminpwd:
-                      command: !Sub |
-                        powershell.exe -Command Set-ADAccountPassword -Identity "Administrator" -Reset -NewPassword (ConvertTo-SecureString -AsPlainText ${AdminPwd} -Force)                   
+                       powershell.exe -Command Install-ADDSForest -DomainName ${DomainName} -DomainMode default -InstallDns -SafeModeAdministratorPassword (ConvertTo-SecureString ${AdminPwd} -AsPlainText -Force) -Confirm:$false -Force
     Properties:
       InstanceType: !Ref InstanceType
       ImageId: !Ref ImageId
@@ -65,8 +61,5 @@ Parameters:
     Description: FQDN of new domain
     Type: String
   AdminPwd:
-    Description: Password for Administrator account
+    Description: Password for AD Safe mode
     Type: String
-  SafeModePwd:
-     Description: Password for AD Safe mode
-     Type: String
