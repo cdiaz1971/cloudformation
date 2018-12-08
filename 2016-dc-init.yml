@@ -19,6 +19,7 @@ Resources:
                    3dcpromo:
                      command: !Sub |
                        powershell.exe -Command Install-ADDSForest -DomainName ${DomainName} -DomainMode default -InstallDns -SafeModeAdministratorPassword (ConvertTo-SecureString ${SafeModePwd} -AsPlainText -Force) -Confirm:$false -Force
+                       waitAfterCompletion: forever
                     4adminpwd:
                       command: !Sub |
                         powershell.exe -Command Set-ADAccountPassword -Identity "Administrator" -Reset -NewPassword (ConvertTo-SecureString -AsPlainText ${AdminPwd} -Force)                   
