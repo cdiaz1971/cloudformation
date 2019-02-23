@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  Windows2016:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      SubnetId: !Ref SubnetID
+      PrivateIpAddress: !Ref PrivateIP
+      ImageId: !Ref ImageId
+      KeyName: !Ref KeyName
+      Tags:
+         - Key: "Name"
+           Value: !Ref InstName
+         
+         - Key: "Test"
+           Value: "Yes"
+      SecurityGroupIds:
+        - sg-036f370c776cadcbc
+Parameters:
+  InstanceType:
+    Description: Windows 2016 Server
+    Type: String
+    Default: t2.large
+    AllowedValues:
+      - t2.large
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an EC2 KeyPair to enable SSH access to the instance.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: AWS_KEY3
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  ImageId:
+    Description: Image ID
+    Type: String
+    Default: ami-050202fb72f001b47
+  InstName:
+    Description: Value of Name tag
+    Type: String
+  SubnetID:
+    Description: Subnet for the instance
+    Type: String
+    Default: subnet-046e273e9632044c5
+  PrivateIP:
+     Description: IP address for instance
+     Type: String
+     Default: 10.102.6.100

@@ -26,8 +26,8 @@ Parameters:
   SubnetID:
     Description: Subnet for the instance
     Type: String
-    Default: subnet-04f7d1c464a94e706
+    Default: subnet-0e360702
   SGID:
     Description: Security Group
     Type: String
-    Default: sg-0bb7bd4397bc4dabc
+    Default: sg-01cafd3f1761a95c5

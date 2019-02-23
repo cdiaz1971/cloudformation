@@ -11,7 +11,7 @@ Resources:
                  commands:
                    1newname:
                      command: !Sub |
-                       powershell.exe -Command Rename-Computer -NewName ${InstName} -Force -Restart"
+                       powershell.exe -Command Rename-Computer -NewName ${InstName} -Force -Restart
                        waitAfterCompletion: forever
                    2installreqs:
                      command: powershell.exe -Command Add-WindowsFeature AD-Domain-Services, RSAT-AD-AdminCenter,RSAT-ADDS-Tools -LogPath "C:\Logs.txt"
@@ -21,6 +21,8 @@ Resources:
                        powershell.exe -Command Install-ADDSForest -DomainName ${DomainName} -DomainMode default -InstallDns -SafeModeAdministratorPassword (ConvertTo-SecureString ${AdminPwd} -AsPlainText -Force) -Confirm:$false -Force
     Properties:
       InstanceType: !Ref InstanceType
+      SubnetId: !Ref SubnetID
+      PrivateIpAddress: !Ref PrivateIP
       ImageId: !Ref ImageId
       KeyName: !Ref KeyName
       Tags:
@@ -30,8 +32,7 @@ Resources:
          - Key: "Test"
            Value: "Yes"
       SecurityGroupIds:
-        - sg-034bff1e03e89cf79
-        - sg-09b16a3c92b4b7f71
+        - sg-0ec7456abe067a8ef
       UserData:
         'Fn::Base64': 
           !Sub |
@@ -41,9 +42,9 @@ Parameters:
   InstanceType:
     Description: Windows 2016 Server
     Type: String
-    Default: t2.micro
+    Default: t2.large
     AllowedValues:
-      - t2.micro
+      - t2.large
     ConstraintDescription: must be a valid EC2 instance type.
   KeyName:
     Description: Name of an EC2 KeyPair to enable SSH access to the instance.
@@ -63,3 +64,11 @@ Parameters:
   AdminPwd:
     Description: Password for AD Safe mode
     Type: String
+  SubnetID:
+    Description: Subnet for the instance
+    Type: String
+    Default: subnet-0fe99205d7fbc23b0
+  PrivateIP:
+     Description: IP address for instance
+     Type: String
+     Default: 10.101.6.100
