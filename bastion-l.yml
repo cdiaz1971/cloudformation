@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create a RedHat server on sharedsvc public subnet
+Resources:
+  BastionL:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !Ref ImageId
+      KeyName: !Ref KeyName
+      SubnetId: !Ref SubnetID
+      SecurityGroupIds:
+        - !Ref SGID
+Parameters:
+  InstanceType:
+    Description: Instance Type
+    Type: String
+    Default: t2.medium
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an EC2 KeyPair to enable SSH access to the instance.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  ImageId:
+    Description: Image ID
+    Type: String
+    Default: ami-098bb5d92c8886ca1
+  SubnetID:
+    Description: Subnet for the instance
+    Type: String
+    Default: subnet-0e360702
+  SGID:
+    Description: Security Group
+    Type: String
+    Default: sg-062c73b53a5fed4ca
