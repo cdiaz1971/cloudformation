@@ -3,6 +3,16 @@ Description: Create a RedHat server on sharedsvc public subnet
 Resources:
   BastionL:
     Type: 'AWS::EC2::Instance'
+    Metadata:
+        AWS::CloudFormation::Init:
+           configSets:
+             default:
+              - rename
+           rename:
+                 commands:
+                    1hostname:
+                       command: !Sub |
+                        echo "${HostName}" | sudo tee /etc/hostname
     Properties:
       InstanceType: !Ref InstanceType
       ImageId: !Ref ImageId
@@ -10,6 +20,10 @@ Resources:
       SubnetId: !Ref SubnetID
       SecurityGroupIds:
         - !Ref SGID
+      UserData:
+        Fn::Base64: !Sub |
+           #!/bin/bash
+           echo "${HostName}" | sudo tee /etc/hostname
 Parameters:
   InstanceType:
     Description: Instance Type
@@ -32,3 +46,7 @@ Parameters:
     Description: Security Group
     Type: String
     Default: sg-062c73b53a5fed4ca
+  HostName:
+    Description: Hostname of Instance
+    Type: String
+
