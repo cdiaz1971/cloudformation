@@ -8,6 +8,12 @@ Resources:
       ImageId: !Ref ImageId
       KeyName: !Ref KeyName
       SubnetId: !Ref SubnetID
+      Tags:
+         - Key: "Name"
+           Value: !Ref HostName
+         
+         - Key: "Environment"
+           Value: "SharedSVC"
       SecurityGroupIds:
         - !Ref SGID
       UserData:
@@ -15,6 +21,7 @@ Resources:
            #!/bin/bash
            hostnamectl set-hostname "${HostName}"
            hostnamectl set-hostname --transient "${HostName}"
+           sudo yum -y install sssd realmd krb5-workstation samba-common-tools
 Parameters:
   InstanceType:
     Description: Instance Type
