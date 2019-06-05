@@ -1,17 +1,24 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Create Security group allowing SSH access
+Description: Create Security group for app servers
 Resources:
-    SSHSG:
+    AppSG:
         Type: AWS::EC2::SecurityGroup
         Properties:
-            GroupDescription: Allow inbound SSH
+            GroupDescription: Allow Connection to app servers
             GroupName: !Ref GroupName
+            Tags:
+               - Key: "Name"
+                 Value: !Ref GroupName
             SecurityGroupIngress:
             - IpProtocol: tcp
-              ToPort: 22
-              FromPort: 22
-              CidrIp: 10.102.0.0/16
+              ToPort: 1521
+              FromPort: 1521
+              CidrIp: !Ref DBserver
 Parameters:
     GroupName:
        Description: Name of Security Group
        Type: String
+    DBserver:
+        Description: IP address of DB server connecting on port 1521 to this instance
+        Type: String
+        Default: 10.102.4.30/32
