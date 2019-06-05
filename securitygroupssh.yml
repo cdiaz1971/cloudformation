@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create Security group allowing SSH access
+Resources:
+    SSHSG:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow inbound SSH
+            GroupName: !Ref GroupName
+            SecurityGroupIngress:
+            - IpProtocol: tcp
+              ToPort: 22
+              FromPort: 22
+              CidrIp: 10.102.0.0/16
+Parameters:
+    GroupName:
+       Description: Name of Security Group
+       Type: String
