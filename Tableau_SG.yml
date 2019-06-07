@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Create Security group for DB servers
+Description: Create Security group allowing SSH access
 Resources:
-    DBserverSG:
+    SSHSG:
         Type: AWS::EC2::SecurityGroup
         Properties:
-            GroupDescription: Allow Connection to DB servers
+            GroupDescription: Allow inbound Port 443 from app server
             GroupName: !Ref GroupName
             VpcId: vpc-04145030a5e37427f
             Tags:
@@ -12,23 +12,14 @@ Resources:
                  Value: !Ref GroupName
             SecurityGroupIngress:
             - IpProtocol: tcp
-              ToPort: 1521
-              FromPort: 1521
-              CidrIp: !Ref DBserver
-            - IpProtocol: tcp
-              ToPort: 1521
-              FromPort: 1521
-              CidrIp: !Ref TBserver
+              ToPort: 443
+              FromPort: 443
+              CidrIp: !Ref Appserver
 Parameters:
     GroupName:
        Description: Name of Security Group
        Type: String
-    DBserver:
+    Appserver:
         Description: IP address of App server connecting on port 1521 to this instance
         Type: String
         Default: 10.102.2.247/32
-    TBserver:
-        Description: IP address of Tableau server connecting on port 1521 to this instance
-        Type: String
-        Default: 10.102.2.35/32
-    

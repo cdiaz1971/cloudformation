@@ -4,8 +4,9 @@ Resources:
     SSHSG:
         Type: AWS::EC2::SecurityGroup
         Properties:
-            GroupDescription: Allow inbound SSH
+            GroupDescription: Allow inbound SSH from inside Test VPC
             GroupName: !Ref GroupName
+            VpcId: vpc-04145030a5e37427f
             Tags:
                - Key: "Name"
                  Value: !Ref GroupName

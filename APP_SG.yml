@@ -6,6 +6,7 @@ Resources:
         Properties:
             GroupDescription: Allow Connection to app servers
             GroupName: !Ref GroupName
+            VpcId: vpc-04145030a5e37427f
             Tags:
                - Key: "Name"
                  Value: !Ref GroupName
