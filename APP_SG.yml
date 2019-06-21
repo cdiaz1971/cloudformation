@@ -12,14 +12,14 @@ Resources:
                  Value: !Ref GroupName
             SecurityGroupIngress:
             - IpProtocol: tcp
-              ToPort: 1521
-              FromPort: 1521
+              ToPort: 22
+              FromPort: 22
               CidrIp: !Ref DBserver
 Parameters:
     GroupName:
        Description: Name of Security Group
        Type: String
     DBserver:
-        Description: IP address of DB server connecting on port 1521 to this instance
+        Description: IP address of DB server connecting on port 22 to this instance
         Type: String
         Default: 10.102.4.30/32

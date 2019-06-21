@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  AWSLinux:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !Ref ImageId
+      KeyName: !Ref KeyName
+      IamInstanceProfile: 'Instance_S3_Bucket_Full'
+      SubnetId: !Ref SubnetID
+      SecurityGroupIds:
+        - sg-091de8cc8755a3781
+      Tags:
+        - Key: Name
+          Value: !Ref NameTag
+        - Key: Environment
+          Value: !Ref EnvName
+      UserData:
+        Fn::Base64: !Sub |
+              #!/bin/bash
+              curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip 
+              sudo yum install unzip -y
+              unzip awscli-bundle.zip
+              sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws		
+Parameters:
+  InstanceType:
+    Description: Instance Type
+    Type: String
+    Default: t2.medium
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an EC2 KeyPair to enable SSH access to the instance.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  ImageId:
+    Description: Image ID
+    Type: String
+    Default: ami-0cc96feef8c6bbff3
+  SubnetID:
+    Description: Subnet for the instance
+    Type: String
+    Default: subnet-00914a752c073aa7f
+  NameTag:
+    Description: Name tag value
+    Type: String
+  EnvName:
+    Description: Environment Instance will be a part of
+    Type: String
