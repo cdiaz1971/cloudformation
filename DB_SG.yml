@@ -19,6 +19,10 @@ Resources:
               ToPort: 1521
               FromPort: 1521
               CidrIp: !Ref TBserver
+            - IpProtocol: tcp
+              ToPort: 1521
+              FromPort: 1521
+              CidrIp: !Ref SharedBas
 Parameters:
     GroupName:
        Description: Name of Security Group
@@ -26,9 +30,13 @@ Parameters:
     DBserver:
         Description: IP address of App server connecting on port 1521 to this instance
         Type: String
-        Default: 10.102.2.247/32
+        Default: 10.102.2.109/32
     TBserver:
         Description: IP address of Tableau server connecting on port 1521 to this instance
         Type: String
-        Default: 10.102.2.35/32
+        Default: 10.102.2.133/32
+    SharedBas:
+        Description: IP address of Shared Svc Bastion server connecting on port 1521 to this instance
+        Type: String
+        Default: 10.25.0.102/32
     
