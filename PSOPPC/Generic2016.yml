@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  Server2016:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !Ref ImageId
+      KeyName: !Ref KeyName
+      SubnetId: !Ref SubnetID
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            DeleteOnTermination: 'false'
+            VolumeSize: '450'
+        - DeviceName: xvdb
+          Ebs:
+            DeleteOnTermination: 'false'
+            VolumeSize: '225'
+        - DeviceName: xvdc
+          Ebs:
+            DeleteOnTermination: 'false'
+            VolumeSize: '225'
+        - DeviceName: xvdd
+          Ebs:
+            DeleteOnTermination: 'false'
+            VolumeSize: '124'
+        - DeviceName: xvde
+          Ebs:
+            DeleteOnTermination: 'false'
+            VolumeSize: '75'
+Parameters:
+  InstanceType:
+    Description: 2016 App server
+    Type: String
+    Default: r3.xlarge
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an EC2 KeyPair to enable SSH access to the instance.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  ImageId:
+    Description: Image ID
+    Type: String
+    Default: ami-01945499792201081
+  SubnetID:
+    Description: Subnet for the instance
+    Type: String
+    Default: subnet-cc18fce7

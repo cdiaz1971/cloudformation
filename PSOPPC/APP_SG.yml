@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create Security group for app servers
+Resources:
+    AppSG:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow Connection to app servers
+            GroupName: !Ref GroupName
+            VpcId: vpc-04145030a5e37427f
+            Tags:
+               - Key: "Name"
+                 Value: !Ref GroupName
+            SecurityGroupIngress:
+            - IpProtocol: tcp
+              ToPort: 22
+              FromPort: 22
+              CidrIp: !Ref DBserver
+Parameters:
+    GroupName:
+       Description: Name of Security Group
+       Type: String
+    DBserver:
+        Description: IP address of DB server connecting on port 22 to this instance
+        Type: String
+        Default: 10.102.4.30/32
